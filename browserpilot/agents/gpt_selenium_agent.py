@@ -119,9 +119,12 @@ class GPTSeleniumAgent:
 
         """Set up the driver."""
         _chrome_options = webdriver.ChromeOptions()
+        #_chrome_options = webdriver.EdgeOptions()
         # 🤫 Evade detection.
         # https://stackoverflow.com/questions/53039551/selenium-webdriver-modifying-navigator-webdriver-flag-to-prevent-selenium-detec
         _chrome_options.add_argument('--disable-blink-features=AutomationControlled')
+        _chrome_options.add_argument("--disable-dev-shm-usage") # overcome limited resource problems
+        _chrome_options.add_argument("--no-sandbox")
         _chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
         _chrome_options.add_experimental_option('useAutomationExtension', False)
         _chrome_options.add_argument(f"user-data-dir={user_data_dir}")
@@ -141,6 +144,7 @@ class GPTSeleniumAgent:
             # Instantiate Service with the path to the chromedriver and the options.
             service = Service(chromedriver_path)
             self.driver = webdriver.Chrome(service=service, options=_chrome_options )
+            #self.driver = webdriver.Edge(service=service, options=_chrome_options )
         # 🤫 Evade detection.
         self.driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
 

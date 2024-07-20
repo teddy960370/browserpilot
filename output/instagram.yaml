@@ -1,0 +1,33 @@
+Instruction:
+- Go to instagram.com
+- Find the anchor which contains the text "Search"
+- Click on it.
+- Wait 0.5 seconds.
+- Find the textbox with the placeholder "Search".
+- Type "capybaras_for_life" and press enter.
+- Wait 1 seconds.
+- Find the span which contains the text "capybaras_for_life".
+- Click on it.
+- Wait 2 seconds.
+- Find all the images on the page.
+- Save each image to a file named "capybara_{index}.jpg" where index is increasing.
+- Wait 2 seconds.
+
+Action: 
+- env.get("https://www.instagram.com")
+- search_anchor = env.find_element(by='xpath', value="//a[contains(normalize-space(), 'Search')]")
+- env.click(search_anchor)
+- env.wait(0.5)
+- search_textbox = env.find_element(by='xpath', value="//input[@placeholder='Search']")
+- env.send_keys(search_textbox, "capybaras_for_life")
+- env.send_keys(search_textbox, Keys.ENTER)
+- env.wait(1)
+- capybara_span = env.find_element(by='xpath', value="//span[contains(normalize-space(), 'capybaras_for_life')]")     
+- env.click(capybara_span)
+- env.wait(2)
+- images = env.find_elements(by='tag name', value='img')
+- index = 1
+- for image in images:
+-     env.screenshot(image, f"capybara_{index}.jpg")
+-     index += 1
+- env.wait(2)
