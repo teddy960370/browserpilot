@@ -15,8 +15,12 @@ from openai import RateLimitError, Timeout, APIError, APIConnectionError, OpenAI
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+from dotenv import load_dotenv
+load_dotenv()
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+
 # Instantiate OpenAI with OPENAI_API_KEY.
-client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+client = OpenAI(api_key=OPENAI_API_KEY)
 
 """Set up all the prompt variables."""
 
@@ -412,7 +416,7 @@ if __name__ == "__main__":
 
     pp = pprint.PrettyPrinter(indent=4)
 
-    with open("prompts/examples/buffalo_wikipedia.txt", "r") as f:
+    with open("prompts/examples/instagram.yaml", "r") as f:
         instructions = f.read()
 
     compiler = InstructionCompiler(instructions=instructions)
